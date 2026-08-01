@@ -1,27 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-const playlist = [
-  "l-FV9ZOp4xw",
-  "37OFgwtS2pM",
-  "gnwiwgdmeZI",
-  "qdzXo5jhngg"
-];
+// Replace these with your actual audio file names inside public/audio
+const playlist = [...Array(11).keys()].map(i => `track${i + 1}.mp3`);
 
 function MusicPlayer() {
-  const [currentSongId, setCurrentSongId] = useState('');
+  const [currentSongFile, setCurrentSongFile] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
+  
+  const audioRef = useRef(null);
 
-  // Pick a random song ID
+  // Pick a random song file
   const playRandomSong = () => {
     const randomIndex = Math.floor(Math.random() * playlist.length);
-    setCurrentSongId(playlist[randomIndex]);
+    setCurrentSongFile(playlist[randomIndex]);
   };
 
+  // Set initial volume once the audio element is mounted (e.g., 30% volume)
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.05; 
+    }
+  }, [audioRef.current]);
+
+  // Initialize random song on mount
   useEffect(() => {
     playRandomSong();
   }, []);
+
+  useEffect(() => {
+    if (audioRef.current && currentSongFile) {
+      if (isPlaying) {
+        audioRef.current.play().catch(error => console.warn("Playback prevented:", error));
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlaying, currentSongFile]);
 
   // Listen for the first pointerdown anywhere on the screen
   useEffect(() => {
@@ -75,24 +91,16 @@ function MusicPlayer() {
         {isPlaying ? '⏸ Pause' : '🎵 Play'}
       </button>
 
-      {/* --- Negative Z-Index Iframe --- */}
-      {isPlaying && currentSongId && (
-        <iframe
-          width="100"
-          height="100"
-          src={`https://www.youtube.com/embed/${currentSongId}?autoplay=1&controls=0&showinfo=0&autohide=1`}
-          title="Background Music"
-          frameBorder="0"
-          allow="autoplay; encrypted-media"
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            zIndex: -9999,
-            opacity: 0,
-            pointerEvents: 'none'
-          }}
-        ></iframe>
+      {/* --- Hidden HTML5 Audio Element --- */}
+      {currentSongFile && (
+        <audio
+          ref={audioRef}
+          // Relative path for GitHub Pages compatibility (no leading slash)
+        //   src={`audio/${currentSongFile}`}
+          src={`${import.meta.env.BASE_URL}audio/${currentSongFile}`}
+          onEnded={playRandomSong} // Automatically play next random track when finished
+          preload="auto"
+        />
       )}
     </div>
   );
