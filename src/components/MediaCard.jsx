@@ -62,9 +62,12 @@ export default function MediaCard({ item, isActive }) {
         ></iframe>
       );
     }
-    
-    if (!src.startsWith('http') && !src.startsWith('/')) {
-      src = '/' + src;
+
+    // Safety check for local files: ensure they use the correct base URL for GitHub Pages
+    if (!src.startsWith('http')) {
+      // Strip any accidental leading slashes from the JSON data, then append the base URL
+      const cleanSrc = src.startsWith('/') ? src.slice(1) : src;
+      src = import.meta.env.BASE_URL + cleanSrc;
     }
 
     if (src.endsWith('.mp4')) {
