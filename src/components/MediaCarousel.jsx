@@ -21,7 +21,7 @@ export default function MediaCarousel({ items }) {
   // - We want exactly 3 items on screen, so each item is 33.333% wide.
   // - To center the first item (Index 0), we push the track right by exactly 33.333%.
   // - Every time we click Next, we shift left by 33.333%.
-  const transformValue = `translateX(calc(33.333% - ${currentIndex * 33.333}%))`;
+  const transformValue = `translateX(calc(var(--offset) - (${currentIndex} * var(--item-width))))`;
 
   return (
     <div className="carousel-container">

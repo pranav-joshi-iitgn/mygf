@@ -4,6 +4,10 @@
   max-width: 1000px;
   margin: 0 auto;
   padding: 20px 0;
+  
+  /* DEFAULT TO MOBILE: 1 item per screen */
+  --item-width: 100%;
+  --offset: 0%;
 }
 
 /* This viewport hides anything outside the main frame */
@@ -15,14 +19,13 @@
 
 .carousel-track {
   display: flex;
-  align-items: center; /* This prevents the flex items from stretching vertically! */
+  align-items: center; 
   transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .carousel-item {
-  /* Exactly 3 items fit in the 100% container */
-  flex: 0 0 33.333%; 
-  /* Use padding for spacing instead of margin so the 33.333% math works perfectly */
+  /* Use the CSS variable instead of hardcoding 33.333% */
+  flex: 0 0 var(--item-width); 
   padding: 0 15px; 
   box-sizing: border-box; 
   transition: transform 0.5s ease, opacity 0.5s ease, filter 0.5s ease;
@@ -38,7 +41,7 @@
 
 .carousel-item.active {
   opacity: 1;
-  filter: grayscale(0%); /* Brings full color back */
+  filter: grayscale(0%); 
   transform: scale(1); 
   pointer-events: auto; 
 }
@@ -92,4 +95,13 @@
   font-size: 1.2rem;
   color: #666;
   padding: 40px;
+}
+
+
+/* DESKTOP VIEW: Override the variables for screens wider than 768px */
+@media (min-width: 768px) {
+  .carousel-container {
+    --item-width: 33.333%;
+    --offset: 33.333%;
+  }
 }
