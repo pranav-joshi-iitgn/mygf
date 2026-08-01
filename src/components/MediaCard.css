@@ -1,0 +1,51 @@
+.media-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease-in-out;
+  /* Make the card shrink-wrap the image: */
+  width: fit-content;
+  max-width: 100%;
+}
+
+.media-card:hover {
+  transform: translateY(-5px);
+}
+
+.media-wrapper {
+  /* Removed width: 100% */
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.media-element {
+  /* Allow the width to scale naturally with the image: */
+  width: auto;
+  max-width: 100%;
+  height: auto; 
+  max-height: 60vh; 
+  object-fit: contain; 
+  border: none;
+}
+
+/* Specific styling to ensure iframes look good */
+iframe.media-element {
+  height: 300px;
+}
+
+.media-caption {
+  margin-top: 16px;
+  font-size: 1.1rem;
+  color: #4a4a4a;
+  text-align: center;
+  font-style: italic;
+  font-family: 'Georgia', serif; 
+  width: 0;
+  min-width: 100%;
+}

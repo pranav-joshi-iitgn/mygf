@@ -1,0 +1,95 @@
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+/* This viewport hides anything outside the main frame */
+.carousel-viewport {
+  width: 100%;
+  overflow: hidden;
+  padding: 20px 0;
+}
+
+.carousel-track {
+  display: flex;
+  align-items: center; /* This prevents the flex items from stretching vertically! */
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.carousel-item {
+  /* Exactly 3 items fit in the 100% container */
+  flex: 0 0 33.333%; 
+  /* Use padding for spacing instead of margin so the 33.333% math works perfectly */
+  padding: 0 15px; 
+  box-sizing: border-box; 
+  transition: transform 0.5s ease, opacity 0.5s ease, filter 0.5s ease;
+  
+  /* Grayed out state for inactive items */
+  opacity: 0.5;
+  filter: grayscale(10%); 
+  transform: scale(0.85); 
+  pointer-events: none; 
+  display: flex;
+  justify-content: center;
+}
+
+.carousel-item.active {
+  opacity: 1;
+  filter: grayscale(0%); /* Brings full color back */
+  transform: scale(1); 
+  pointer-events: auto; 
+}
+
+.carousel-item .media-card {
+  margin: 0;
+}
+
+/* Hovering buttons absolute positioned on the sides */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background-color: rgba(255, 182, 193, 0.9);
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.2s, opacity 0.2s;
+}
+
+.carousel-btn:hover:not(:disabled) {
+  background-color: #ff69b4;
+}
+
+.carousel-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0; /* Hides the button entirely when it reaches the end */
+}
+
+.left-btn {
+  left: 10px;
+}
+
+.right-btn {
+  right: 10px;
+}
+
+.carousel-loading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  padding: 40px;
+}
