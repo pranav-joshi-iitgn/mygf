@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import MediaCarousel from './components/MediaCarousel';
-import Poem from './components/Poem'; // Import the new component
+import Poem from './components/Poem';
+import Quotes from './components/Quotes'; // Import Quotes
+import MusicPlayer from './components/MusicPlayer'; // Import your new component
 
 function App() {
   const [mediaItems, setMediaItems] = useState([]);
@@ -14,15 +16,17 @@ function App() {
 
   return (
     <div style={{ padding: '40px 20px', fontFamily: 'sans-serif' }}>
-      <h1 style={{ textAlign: 'center', color: '#4a4a4a' }}>Our Memories</h1>
-      
+      {/* Drop in the music player anywhere; fixed positioning handles the rest */}
+      <MusicPlayer />
+
+      <h1 style={{ textAlign: 'center', color: '#4a4a4a' }}>Abhu</h1>
       <MediaCarousel items={mediaItems} />
       
-      {/* Add a divider and the Poem component */}
-      <hr style={{ border: 'none', borderTop: '1px solid #eee', margin: '60px 0' }} />
-      <h2 style={{ textAlign: 'center', color: '#4a4a4a', fontFamily: 'Georgia, serif' }}>A Poem for You</h2>
+      <h2 style={{ textAlign: 'center', color: '#4a4a4a', fontFamily: 'Georgia, serif' }}>Words We Shared</h2>
+      <Quotes />
+
+      <h2 style={{ textAlign: 'center', color: '#4a4a4a', fontFamily: 'Georgia, serif' }}>A Poem</h2>
       <Poem />
-      
     </div>
   );
 }
